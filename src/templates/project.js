@@ -3,62 +3,63 @@ import { Link, graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Bio from "../components/bio"
-import { Helmet } from "react-helmet"
 import { useSiteMetadata } from "../components/useSiteMetadata"
 import Img from "gatsby-image"
 import kebabCase from "lodash/kebabCase"
 
 export default function Project({ data, pageContext, location }) {
-  console.log({data})
-  const project = data.mdx
+  console.log({ data })
+  const { body, frontmatter } = data.mdx
+  const { title, description, categories, featuredImage,liveSite } = frontmatter
+
+  console.log({ frontmatter })
   const { image } = useSiteMetadata()
 
   return (
     <Layout location={location}>
-      <SEO title={project.frontmatter.title} image={image} />
+      <SEO title={title} image={image} />
       <article>
-        <h1 className="center">{project.frontmatter.title}</h1>
-       
-        <br />
-        <p className="center blog-date">{project.frontmatter.description}</p>
-        <br />
-        <p>
-          <strong>
-            {project.frontmatter.categories.map((category, index) => {
-              const addSlash = index !== project.frontmatter.categories.length - 1 ? "/" : ""
+        <h1 className="center">{title}</h1>
 
-              console.log({category,index,length:project.frontmatter.categories.length})
+        <br />
+        <p className="center blog-date">{description}</p>
+        <br />
+
+       
+        <p className="center">
+          <strong>
+            {categories.map((category, index) => {
+              const addSlash = index !== categories.length - 1 ? "/" : ""
+
               return (
-                <span key={index} >
+                <span key={index}>
                   <Link
                     to={`/project/category/${kebabCase(category)}/`}
                     style={{
                       textDecoration: "none",
                     }}
                   >
-                    {category}{addSlash}
+                    {category}
+                    {addSlash}
                   </Link>{" "}
                 </span>
               )
             })}
           </strong>
         </p>
-        <MDXRenderer>{project.body}</MDXRenderer>
+        {liveSite && (<p className="center"><a href={liveSite} >Vist Site</a></p>)}
+        <br />
+        <MDXRenderer>{body}</MDXRenderer>
 
+       
         <div className="center">
           <Img
-            fluid={project.frontmatter.featuredImage.childImageSharp.fluid}
-            alt={project.frontmatter.title}
+            fluid={featuredImage.childImageSharp.fluid}
+            alt={title}
             className="blog-feature-image-pinterest"
           />
         </div>
-        <div><p>
-          {project.frontmatter.description}
-          
-          </p></div>
       </article>
-
     </Layout>
   )
 }
@@ -71,6 +72,7 @@ export const projectQuery = graphql`
         title
         description
         categories
+        liveSite
         featuredImage {
           childImageSharp {
             fluid(maxWidth: 600) {

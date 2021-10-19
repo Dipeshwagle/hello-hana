@@ -95,7 +95,6 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   // Create project detail pages
   projects.forEach(({ node, next, previous }) => {
-    console.log({node})
     createPage({
       path: `/project/${node.frontmatter.slug}`,
       component: projectTemplate,
