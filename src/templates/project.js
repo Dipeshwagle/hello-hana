@@ -10,7 +10,15 @@ import kebabCase from "lodash/kebabCase"
 export default function Project({ data, pageContext, location }) {
   console.log({ data })
   const { body, frontmatter } = data.mdx
-  const { title, description, categories, featuredImage,liveSite } = frontmatter
+  const {
+    title,
+    description,
+    categories,
+    featuredImage,
+    liveSite,
+    testimonials,
+    date
+  } = frontmatter
 
   console.log({ frontmatter })
   const { image } = useSiteMetadata()
@@ -22,10 +30,22 @@ export default function Project({ data, pageContext, location }) {
         <h1 className="center">{title}</h1>
 
         <br />
-        <p className="center blog-date">{description}</p>
+        <div className="center ">
+          <MDXRenderer>{description}</MDXRenderer>
+        </div>
         <br />
+        <div className="center">
+          <Img
+            fluid={featuredImage.childImageSharp.fluid}
+            alt={title}
+            className="blog-feature-image-pinterest"
+          />
+        </div>
 
-       
+       <p className="center">
+          <strong>{date}</strong>
+        </p>
+
         <p className="center">
           <strong>
             {categories.map((category, index) => {
@@ -47,18 +67,23 @@ export default function Project({ data, pageContext, location }) {
             })}
           </strong>
         </p>
-        {liveSite && (<p className="center"><a href={liveSite} >Vist Site</a></p>)}
+        {liveSite && (
+          <p className="center">
+            <a href={liveSite}>Vist Site</a>
+          </p>
+        )}
         <br />
+        {testimonials && (
+          <div>
+            <ul>
+              {testimonials.map(testimonial => (
+                <li>{testimonial}</li>
+              ))}
+            </ul>
+          </div>
+        )}˝
+        <br/>
         <MDXRenderer>{body}</MDXRenderer>
-
-       
-        <div className="center">
-          <Img
-            fluid={featuredImage.childImageSharp.fluid}
-            alt={title}
-            className="blog-feature-image-pinterest"
-          />
-        </div>
       </article>
     </Layout>
   )
@@ -73,6 +98,8 @@ export const projectQuery = graphql`
         description
         categories
         liveSite
+        testimonials
+        date(formatString: "YYYY")
         featuredImage {
           childImageSharp {
             fluid(maxWidth: 600) {

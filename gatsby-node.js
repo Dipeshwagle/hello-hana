@@ -118,6 +118,19 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
   })
 }
 
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(`
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+    }
+
+    type MdxFrontmatter {
+      description: String @mdx
+    }
+
+  `);
+};
+
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const projects = [
     {

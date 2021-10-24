@@ -29,7 +29,14 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-mdx-frontmatter`,
     `gatsby-plugin-mdx-source-name`,
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: `6335653241`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {

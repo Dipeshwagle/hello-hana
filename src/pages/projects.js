@@ -3,52 +3,35 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 //import Img from "gatsby-image"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-
-import alilaGIF from "../gifs/Alila-Jewelry-Website.gif"
-import bhcGIF from "../gifs/The-Backcountry-Hut-Company-Website.gif"
-import codeopGIF from "../gifs/CodeOp-Website.gif"
-import colibriGIF from "../gifs/Colibri-Productos-al-Granel-Website.gif"
-import fraukeGIF from "../gifs/Frauke-Seewald-Website.gif"
-import kellyGIF from "../gifs/Kelly-Waldeck-Website.gif"
-import lauraGIF from "../gifs/Laura-Dershaw-Skincare-Website.gif"
-import lindsiGIF from "../gifs/Lindsi-Hollend-Website.gif"
-import mamabirdGIF from "../gifs/Mama-Bird-and-co-website.gif"
-import rawsGIF from "../gifs/RAWS-Website.gif"
-import soscGIF from "../gifs/Sense-of-Self-Counselling-Website.gif"
-import simonaGIF from "../gifs/Simona-Cellar-Website.gif"
-import spssGIF from "../gifs/Simply-Pure-Skin-Studio-Website.gif"
-import terGIF from "../gifs/Telephone-Explosion-Website.gif"
-import totpGIF from "../gifs/Tax-on-Track-Pro-Website.gif"
-
-import wildcookieGIF from "../gifs/Wild-Cookie-Website.gif"
+import Image from "gatsby-image"
+import kebabCase from "lodash/kebabCase"
 
 const ProjectsPage = () => {
-  const imgArr = {
-    bhcGIF: bhcGIF,
-    codeopGIF: codeopGIF,
-    colibriGIF: colibriGIF,
-    fraukeGIF: fraukeGIF,
-    kellyGIF: kellyGIF,
-    lauraGIF: lauraGIF,
-    lindsiGIF: lindsiGIF,
-    soscGIF: soscGIF,
-    rawsGIF: rawsGIF,
-    simonaGIF: simonaGIF,
-    spssGIF: spssGIF,
-    totpGIF: totpGIF,
-    wildcookieGIF: wildcookieGIF,
-  }
 
   const data = useStaticQuery(graphql`
     query {
-      allProject {
-        nodes {
-          title
-          description
-          image
-          alt
-          url
-          showUrl
+      projects: allMdx(
+        filter: { fields: { source: { eq: "projects" } } }
+        sort: { order: ASC, fields: frontmatter___date }
+      ) {
+        edges {
+          node {
+            id
+            frontmatter {
+              slug
+              title
+              description
+              date(formatString: "YYYY")
+              categories
+              featuredImage {
+                childImageSharp {
+                  fluid(maxWidth: 600) {
+                    ...GatsbyImageSharpFluid
+                  }
+                }
+              }
+            }
+          }
         }
       }
       site {
@@ -59,129 +42,110 @@ const ProjectsPage = () => {
     }
   `)
 
+  const projects = data.projects.edges
+
+  const firstSixProjects = projects.slice(0, 6)
+
+  const remainingProjects = projects.slice(6)
+
+  console.log({ firstSixProjects, remainingProjects })
+
   return (
     <Layout>
       <SEO title="Projects" image={data.site.siteMetadata.image} />
       <section>
         <h1 className="indent">Recent Projects</h1>
+        <p className="indent">
+          Exercitation ullamco labore id non excepteur qui minim quis aliquip
+          tempor labore aliqua sit. Elit deserunt eu ea Lorem nulla eu aliqua
+          veniam ea magna consequat minim ea. Consequat dolore aute qui
+          adipisicing dolore irure ex magna qui deserunt. Mollit consectetur
+          sunt non ea id. Commodo irure et labore ex veniam fugiat mollit in
+          voluptate veniam cupidatat veniam quis non. Eiusmod tempor officia
+          reprehenderit qui adipisicing ad in ea cillum esse exercitation enim
+          mollit occaecat. Sit cupidatat nostrud cupidatat sit aliquip nostrud
+          consectetur consequat sunt anim laboris tempor irure anim. Commodo
+          aliquip qui do laborum magna. Exercitation nostrud et sit laboris
+          veniam Lorem. Excepteur aliquip dolor excepteur duis mollit ipsum
+          elit. Nostrud do ut veniam ut. Dolor fugiat qui proident id aute
+          adipisicing id et aliquip ex nostrud.
+        </p>
         <div className="flex-space-between project-showcase">
-          <div className="half-width">
-            <img
-              src={mamabirdGIF}
-              alt="Mama Bird and Co. Website Preview"
-              className="portrait"
-            />
-          </div>
-          <div className="half-width project-showcase-description">
-            <p>
-              <strong>Mama Bird & Co. - Graphic Tees</strong>
-              <br />
-              <em>Shopify Design & Build</em>
-            </p>
-            <p>
-              After one year on Shopify, Graphic T-shirt shop Mama Bird & Co.
-              found that its customers were confused about product availability.
-              This project involved a complete overhaul of 400+ product listings
-              to allow for better organization for both the back and front end.
-              Upgrading to a new theme with color swatches and larger imagery
-              allowed for clarity of product options, and an aesthetic better
-              suited for fashion brands.
-            </p>
-            <p>
-              <a
-                href="https://www.mamabirdandco.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit mamabirdandco.com
-              </a>
-            </p>
-          </div>
-        </div>
+          {firstSixProjects.map(({ node }) => {
+            const { title, featuredImage, categories, slug } = node.frontmatter
+            return (
+              <div className="half-width project-showcase-description center">
+                <Link to={`/project/${slug}`}>
+                  <Image
+                    fluid={featuredImage.childImageSharp.fluid}
+                    alt={title}
+                  />
+                </Link>
+                <p>
+                  <strong>{title}</strong>
+                </p>
+                <p>
+                  {categories.map((category, index) => {
+                    const addSlash = index !== categories.length - 1 ? "/" : ""
 
-        <div className="flex-space-between reverse project-showcase">
-          <div className="half-width project-showcase-description">
-            <p>
-              <strong>Telephone Explosion Records</strong>
-              <br />
-              <em>Shopify Redesign & Build</em>
-            </p>
-            <p>
-              A modern and bold refresh to TER's website with an emphasis on
-              connecting customers to the music. By embedding music players,
-              adding digital downloads, and allowing for easier discovery of the
-              catalog, customers can have an emmersive shopping experience. This
-              project involved building several custom sections and page
-              layouts.
-            </p>
-            <p>
-              <a
-                href="https://www.telephonexplosion.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit telephoneexplosion.com
-              </a>
-            </p>
-          </div>
-          <div className="half-width">
-            <img
-              src={terGIF}
-              alt="Telephone Explosion Records Shopify Website Preview"
-              className="portrait"
-            />
-          </div>
-        </div>
-
-        <div className="flex-space-between project-showcase">
-          <div className="half-width">
-            <img
-              src={alilaGIF}
-              alt="Alila Jewelry Website Preview"
-              className="portrait"
-            />
-          </div>
-          <div className="half-width project-showcase-description">
-            <p>
-              <strong>ALILA Jewelry</strong>
-              <br />
-              <em>Shopify Design & Build</em>
-            </p>
-            <p>
-              A start-to-finish Shopify store setup. Using a free theme, I
-              customized the theme code to create an attractive and polished
-              design that focused on the visual nature of the product.
-            </p>
-            <p>
-              <a
-                href="https://www.alilajewelry.com/"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Visit alilajewelry.com
-              </a>
-            </p>
-          </div>
+                    return (
+                      <span key={index}>
+                        <Link
+                          to={`/project/category/${kebabCase(category)}/`}
+                          style={{
+                            textDecoration: "none",
+                          }}
+                        >
+                          {category}
+                          {addSlash}
+                        </Link>{" "}
+                      </span>
+                    )
+                  })}
+                </p>
+              </div>
+            )
+          })}
         </div>
       </section>
-
       <div className="horizontal-line"></div>
       <section>
         <h2 className="center pad-bottom">Past Projects</h2>
         <div className="flex-space-between">
-          {data.allProject.nodes.map((obj, i) => (
-            <div className="past-project" key={i}>
-              <img src={imgArr[obj.image]} alt={obj.alt} />
-              <p>
-                <strong>{obj.title} </strong> <br />
-                {obj.description} <br />
-                <a href={obj.url} target="_blank" rel="noreferrer">
-                  {" "}
-                  {obj.showUrl}{" "}
-                </a>
-              </p>
-            </div>
-          ))}
+          {remainingProjects.map(({ node }) => {
+            const { id, title, featuredImage, categories, slug,date } = node.frontmatter
+            return (
+              <div className="past-project" key={id}>
+                <Link to={`/project/${slug}`}>
+                  <Image
+                    fluid={featuredImage.childImageSharp.fluid}
+                    alt={title}
+                  />
+                  <p>{title} / {date}</p>
+                  <p>
+                    {categories.map((category, index) => {
+                      const addSlash =
+                        index !== categories.length - 1 ? "/" : ""
+
+                      return (
+                        <span key={index}>
+                          <Link
+                            to={`/project/category/${kebabCase(category)}/`}
+                            style={{
+                              textDecoration: "none",
+                            }}
+                          >
+                            {category}
+                            {addSlash}
+                          </Link>{" "}
+                        </span>
+                      )
+                    })}
+                  </p>
+                </Link>
+              </div>
+            )
+          })}
         </div>
       </section>
 
