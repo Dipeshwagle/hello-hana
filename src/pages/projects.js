@@ -4,7 +4,7 @@ import { Link, useStaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Image from "gatsby-image"
-import kebabCase from "lodash/kebabCase"
+import Categories from "../components/categories"
 
 const ProjectsPage = () => {
 
@@ -48,8 +48,6 @@ const ProjectsPage = () => {
 
   const remainingProjects = projects.slice(6)
 
-  console.log({ firstSixProjects, remainingProjects })
-
   return (
     <Layout>
       <SEO title="Projects" image={data.site.siteMetadata.image} />
@@ -85,23 +83,7 @@ const ProjectsPage = () => {
                   <strong>{title}</strong>
                 </p>
                 <p>
-                  {categories.map((category, index) => {
-                    const addSlash = index !== categories.length - 1 ? "/" : ""
-
-                    return (
-                      <span key={index}>
-                        <Link
-                          to={`/project/category/${kebabCase(category)}/`}
-                          style={{
-                            textDecoration: "none",
-                          }}
-                        >
-                          {category}
-                          {addSlash}
-                        </Link>{" "}
-                      </span>
-                    )
-                  })}
+                  <Categories categories={categories}/>
                 </p>
               </div>
             )
@@ -123,24 +105,7 @@ const ProjectsPage = () => {
                   />
                   <p>{title} / {date}</p>
                   <p>
-                    {categories.map((category, index) => {
-                      const addSlash =
-                        index !== categories.length - 1 ? "/" : ""
-
-                      return (
-                        <span key={index}>
-                          <Link
-                            to={`/project/category/${kebabCase(category)}/`}
-                            style={{
-                              textDecoration: "none",
-                            }}
-                          >
-                            {category}
-                            {addSlash}
-                          </Link>{" "}
-                        </span>
-                      )
-                    })}
+                  <Categories categories={categories}/>
                   </p>
                 </Link>
               </div>

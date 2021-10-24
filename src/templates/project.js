@@ -1,14 +1,14 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import { useSiteMetadata } from "../components/useSiteMetadata"
 import Img from "gatsby-image"
-import kebabCase from "lodash/kebabCase"
+import Categories from "../components/categories"
+
 
 export default function Project({ data, pageContext, location }) {
-  console.log({ data })
   const { body, frontmatter } = data.mdx
   const {
     title,
@@ -19,8 +19,6 @@ export default function Project({ data, pageContext, location }) {
     testimonials,
     date
   } = frontmatter
-
-  console.log({ frontmatter })
   const { image } = useSiteMetadata()
 
   return (
@@ -48,23 +46,7 @@ export default function Project({ data, pageContext, location }) {
 
         <p className="center">
           <strong>
-            {categories.map((category, index) => {
-              const addSlash = index !== categories.length - 1 ? "/" : ""
-
-              return (
-                <span key={index}>
-                  <Link
-                    to={`/project/category/${kebabCase(category)}/`}
-                    style={{
-                      textDecoration: "none",
-                    }}
-                  >
-                    {category}
-                    {addSlash}
-                  </Link>{" "}
-                </span>
-              )
-            })}
+            <Categories categories={categories}/>
           </strong>
         </p>
         {liveSite && (

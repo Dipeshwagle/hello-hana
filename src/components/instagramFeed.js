@@ -1,7 +1,6 @@
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Image from "gatsby-image"
-import ReactMarquee from "react-fast-marquee"
 
 const InstagramFeed = () => {
   const data = useStaticQuery(graphql`
@@ -22,7 +21,6 @@ const InstagramFeed = () => {
     }
   `)
 
-  console.log({ data })
   return (
     <div className="flex overflow-x-scroll flex-wrap">
         {data.photos.edges.map(({ node }) => {

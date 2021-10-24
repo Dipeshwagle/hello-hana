@@ -25,8 +25,6 @@ function Wrapper(props) {
 }
 
 function Layout(props) {
-  // console.log(props)
-
   return (
     <>
       <Header siteTitle="Hana Drdla - Shopify Web Developer" />

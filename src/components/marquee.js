@@ -29,7 +29,6 @@ const Marquee = () => {
     }
   `)
 
-  console.log({ data })
   return (
     <div>
       <ReactMarquee>{data.projects.edges.map(({ node }) => {

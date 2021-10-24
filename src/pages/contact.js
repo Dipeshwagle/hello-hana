@@ -1,9 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import Layout from "../components/layout"
 import Socials from "../components/socials"
 import SEO from "../components/seo"
-import Helmet from "react-helmet"
 import IframeResizer from "iframe-resizer-react"
 
 const ContactPage = () => {
