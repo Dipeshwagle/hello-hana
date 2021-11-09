@@ -126,7 +126,7 @@ const ProjectsPage = () => {
             } = node.frontmatter
             return (
               <Tooltip.Root delayDuration={100}>
-                <Tooltip.Trigger style={{width:'100%'}}>
+                <Tooltip.Trigger asChild>
                   <div className="project-list-item" key={id}>
                     <Link to={`/project/${slug}`}>
                       <p>{title}</p>
