@@ -29,6 +29,14 @@ module.exports = {
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
+    `gatsby-plugin-mdx-frontmatter`,
+    `gatsby-plugin-mdx-source-name`,
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: `6335653241`,
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
@@ -54,7 +62,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`lato:400,700,900`],
+        fonts: [
+          `Lato\:400,700,900`,
+          `La Belle Aurore`,
+          `Allison`, 
+        ],
         display: "swap",
       },
     },
@@ -63,6 +75,13 @@ module.exports = {
       options: {
         name: "posts",
         path: `${__dirname}/src/posts`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "projects",
+        path: `${__dirname}/src/projects`,
       },
     },
     {
@@ -92,6 +111,20 @@ module.exports = {
               maxWidth: 590,
             },
           },
+          "gatsby-remark-gifs",
+          {
+            resolve: 'gatsby-remark-video',
+            options: {
+              width: 800,
+              height: 'auto',
+              preload: 'auto',
+              muted: true,
+              autoplay: true,
+              playsinline: true,
+              controls: true,
+              loop: true
+            }
+          }
         ],
       },
     },

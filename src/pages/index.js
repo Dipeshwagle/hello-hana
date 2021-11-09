@@ -7,17 +7,9 @@ import SEO from "../components/seo"
 import Flickity from "react-flickity-component"
 import "../styles/flickity.css"
 import { OutboundLink } from "gatsby-plugin-google-analytics"
-
-
-import fraukeGIF from "../gifs/Frauke-Seewald-Website.gif"
-import soscGIF from "../gifs/Sense-of-Self-Counselling-Website.gif"
+import Marquee from "../components/marquee"
 
 const IndexPage = () => {
-  const flickityOptions = {
-    autoPlay: true,
-    wrapAround: true,
-  }
-
   const data = useStaticQuery(graphql`
     query {
       hana: file(relativePath: { eq: "Hana-web-developer.jpg" }) {
@@ -54,6 +46,10 @@ const IndexPage = () => {
     jobTitle: "Web & Shopify Developer",
   }
 
+  const flickityOptions = {
+    autoPlay: true,
+    wrapAround: true,
+  }
   return (
     <Layout>
       <SEO
@@ -172,56 +168,9 @@ const IndexPage = () => {
 
       <div className="horizontal-line"></div>
       <section>
-        <div id="feature"></div>
-        <h2 className="featured-title indent">Featured Projects</h2>
-
-        <Flickity
-          className={"main-carousel"} // default ''
-          elementType={"div"} // default 'div'
-          options={flickityOptions} // takes flickity options {}
-          disableImagesLoaded={false} // default false
-          reloadOnUpdate // default false
-          static // default false
-        >
-          <div className="carousel-cell">
-            <div className="flex-space-between">
-              <div className="testimonial v-center">
-                <blockquote className="quote-home">
-                  Hana is great to work with - she understands quickly, thinks
-                  ahead and provides valuable ideas and feedback and provides
-                  results with high quality. I really enjoy working with Hana!
-                </blockquote>
-              </div>
-
-              <div className="feature-screen v-center">
-                <img
-                  src={fraukeGIF}
-                  alt="Frauke Seewald Website Preview"
-                  className="portrait"
-                />
-              </div>
-            </div>
-          </div>
-          <div className="carousel-cell">
-            <div className="flex-space-between">
-              <div className="testimonial v-center">
-                <blockquote className="quote-home">
-                  Working with Hana has been a brilliant experience. She
-                  understood what I wanted out of my website straight away. She
-                  was diligent in her work and delivered exactly what I wanted.
-                </blockquote>
-              </div>
-
-              <div className="feature-screen v-center">
-                <img
-                  src={soscGIF}
-                  alt="Sense of Self Counselling Website Preview"
-                  className="portrait"
-                />
-              </div>
-            </div>
-          </div>
-        </Flickity>
+        <h2 className="center with-sub">Featured Projects</h2>
+        <p className="center subtitle">Unique Shopify stores that stand out</p>
+          <Marquee />
         <div className="center">
           <Link to="/projects" className="btn btn-purple">
             See all projects
@@ -231,52 +180,62 @@ const IndexPage = () => {
 
       <div className="horizontal-line"></div>
       <section>
-        <div className="blue-bg">
-          <h2>The Complete Shopify Course</h2>
-          <div className="course-invite">
-            <h3 className="large move-up">
-              Learn to building an <nobr>e-Commerce</nobr> store that that
-              attracts your ideal customer
-            </h3>
-            <br />
-            <p>
-              I’m sharing with you step-by-step how to build your e-commerce
-              business on Shopify.
+        <h2 className="featured-title indent">Happy Customers</h2>
+        <Flickity
+          className={"main-carousel testimonial-slider"} // default ''
+          elementType={"div"} // default 'div'
+          options={flickityOptions} // takes flickity options {}
+          disableImagesLoaded={false} // default false
+          reloadOnUpdate // default false
+          static // default false
+        >
+
+          <div className="carousel-cell">
+            <p className="quote">
+              A completely <span className="highlight hl-purple">brilliant and professional</span> service that I am so happy I went with. Hana <span className="highlight hl-purple">TRANSFORMED</span> our website completely.
             </p>
-            <br />
-            <p>
-              Follow along and you’ll be launching your online store in no time.
-              No developer needed.
+            <p className="center">
+              Naama Blonder, <em>Smart Density</em>
             </p>
           </div>
-          <div className="counter-list">
-            <ul>
-              <li className="counter">
-                <span>1</span>Watch
-              </li>
-              <li className="counter">
-                <span>2</span>Build
-              </li>
-              <li className="counter">
-                <span className="bg-yellow">3</span>Earn
-              </li>
-            </ul>
+
+
+          <div className="carousel-cell">
+            <p className="quote">
+              Working with Hana has been{" "}
+              <span className="highlight hl-yellow">
+                a brilliant experience
+              </span>{" "}. 
+              She understood what I wanted out of my website straight away. She
+              was diligent in her work and{" "}
+              <span className="highlight hl-yellow">
+                delivered exactly what I wanted.
+              </span>
+            </p>
+            <p className="center">
+              Dr. Hulya Hooker, <em>Sense of Self Counselling</em>
+            </p>
           </div>
-          <a
-            href="/shopify-course"
-            className="btn btn-yellow bg-trans hover-blue"
-            onClick={e => {
-              trackCustomEvent({
-                category: "Custom Button",
-                action: "Click",
-                label: "Home Shopify Course Feature",
-              })
-            }}
-          >
-            Get the details
-          </a>
-        </div>
+
+          <div className="carousel-cell">
+            <p className="quote">
+              It was{" "}
+              <span className="highlight hl-blue">an absolute pleasure</span>{" "}
+              working with Hana. She designed a beautiful website and online
+              store for me. She listened to my needs and preferences and kept
+              the lines of communication open throughout the project.
+            </p>
+            <p className="center">
+              Carol Murphy, <em>Simply Pure Skin Studio</em>
+            </p>
+          </div>
+
+        </Flickity>
+
+
+
       </section>
+
     </Layout>
   )
 }

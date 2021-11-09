@@ -40,8 +40,6 @@ function SEO({
     `
   )
 
-  console.log("site seo", site.siteMetadata.image)
-
   const metaDescription = description || site.siteMetadata.description
   const image = site.siteMetadata.image
   const canonical = pathname ? `${site.siteMetadata.siteUrl}${pathname}` : null
@@ -56,7 +54,6 @@ function SEO({
           ? site.siteMetadata.title
           : `${title} | ${site.siteMetadata.title}`
       }
-      // titleTemplate={`%s | ${site.siteMetadata.title}`}
       link={
         canonical
           ? [

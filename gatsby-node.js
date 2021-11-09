@@ -6,10 +6,11 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
 
   const postTemplate = path.resolve("src/templates/blog-post.js")
   const tagTemplate = path.resolve("src/templates/tags.js")
+  const projectTemplate = path.resolve("src/templates/project.js")
 
   const result = await graphql(`
     {
-      allMdx {
+      posts: allMdx(filter: { fields: { source: { eq: "posts" } } }) {
         edges {
           node {
             body
@@ -34,7 +35,36 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
           }
         }
       }
-      tagsGroup: allMdx(limit: 2000) {
+      projects: allMdx(filter: { fields: { source: { eq: "projects" } } }) {
+        edges {
+          node {
+            body
+            id
+            frontmatter {
+              path
+              title
+              tags
+              slug
+            }
+          }
+          next {
+            frontmatter {
+              path
+              title
+            }
+          }
+          previous {
+            frontmatter {
+              path
+              title
+            }
+          }
+        }
+      }
+      tagsGroup: allMdx(
+        filter: { fields: { source: { eq: "projects" } } }
+        limit: 2000
+      ) {
         group(field: frontmatter___tags) {
           fieldValue
         }
@@ -48,7 +78,7 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     return
   }
 
-  const posts = result.data.allMdx.edges
+  const posts = result.data.posts.edges
   // Create post detail pages
   posts.forEach(({ node, next, previous }) => {
     createPage({
@@ -57,6 +87,19 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
       context: {
         next,
         previous,
+      },
+    })
+  })
+
+  const projects = result.data.projects.edges
+
+  // Create project detail pages
+  projects.forEach(({ node, next, previous }) => {
+    createPage({
+      path: `/project/${node.frontmatter.slug}`,
+      component: projectTemplate,
+      context: {
+        slug: node.frontmatter.slug,
       },
     })
   })
@@ -74,6 +117,19 @@ exports.createPages = async ({ actions, graphql, reporter }) => {
     })
   })
 }
+
+exports.createSchemaCustomization = ({ actions: { createTypes } }) => {
+  createTypes(`
+    type Mdx implements Node {
+      frontmatter: MdxFrontmatter
+    }
+
+    type MdxFrontmatter {
+      description: String @mdx
+    }
+
+  `);
+};
 
 exports.sourceNodes = ({ actions, createNodeId, createContentDigest }) => {
   const projects = [

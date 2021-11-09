@@ -5,6 +5,7 @@ import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Img from "gatsby-image"
 import { useSiteMetadata } from "../components/useSiteMetadata"
+import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 const BlogPage = () => {
   const data = useStaticQuery(graphql`
@@ -85,7 +86,12 @@ const BlogPage = () => {
           <h1>Welcome to the blog!</h1>
           <br />
           <p>
-            Check back regularly for my thoughts on Shopify and web design.{" "}
+            My thoughts on Shopify, web design and freelancing. <br /><br />Find more of my writing and Shopify tutorials over on the &nbsp;
+             <OutboundLink href="https://blog.lunatemplates.co"
+                target="_blank"
+                rel="Hanadrdla.com"
+                alt="Luna Templates Blog"
+            >Luna Templates Blog.</OutboundLink>{" "}
             <br />
             <br />
           </p>

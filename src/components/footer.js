@@ -1,6 +1,5 @@
 import React from "react"
 import { Link } from "gatsby"
-import { Helmet } from "react-helmet"
 import Socials from "./socials"
 
 const Footer = () => (
@@ -32,6 +31,7 @@ const Footer = () => (
         <Socials />
       </div>
     </div>
+
 
   </footer>
 )

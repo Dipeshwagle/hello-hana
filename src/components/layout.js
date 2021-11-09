@@ -7,6 +7,7 @@
 
 import React from "react"
 import Header from "./header"
+import Inquire from "./inquire"
 import Footer from "./footer"
 import "../styles/styles.scss"
 
@@ -25,11 +26,10 @@ function Wrapper(props) {
 }
 
 function Layout(props) {
-  // console.log(props)
-
   return (
     <>
       <Header siteTitle="Hana Drdla - Shopify Web Developer" />
+      <Inquire />
       <Wrapper>
         <main>{props.children}</main>
       </Wrapper>
