@@ -37,22 +37,24 @@ const ContactPage = () => {
         <div className="flex-space-between">
           <div className="indent contact-hero-flex-1 mobile-left">
             <h3 className="underline ul-blue">How can I help you?</h3>
-            <p>Send me an email at hanadrdla@gmail.com</p>
-            <br />
             <p className="pad-bottom">
               Tell me about the project you have in mind and I'll get back to
-              you within 48 hours.
+              you within 2 business days.
             </p>
 
             <h3 className="underline ul-yellow">Stay in Touch</h3>
             <Socials />
           </div>
-          <div className="hero-flex-2"></div>{" "}
+          <div className="hero-flex-2">
+
+          {" "}
           <IframeResizer
             src="https://hello.dubsado.com:443/public/form/view/608aa9e8fef8b96fc417dc95"
             frameborder="0"
             style={{"min-width": "100%","min-height": "100%" }}
           />
+
+          </div>
         </div>
       </section>
     </Layout>

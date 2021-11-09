@@ -9,7 +9,8 @@ const Marquee = () => {
     query {
       projects: allMdx(
         filter: { fields: { source: { eq: "projects" } } }
-        sort: { order: ASC, fields: frontmatter___date }
+        sort: { order: DESC, fields: frontmatter___date }
+        limit: 6
       ) {
         edges {
           node {
@@ -17,7 +18,7 @@ const Marquee = () => {
             frontmatter {
               featuredImage {
                 childImageSharp {
-                  fixed(width: 200,height: 200) {
+                  fixed(height: 320) {
                     ...GatsbyImageSharpFixed
                   }
                 }
@@ -33,7 +34,8 @@ const Marquee = () => {
     <div>
       <ReactMarquee>{data.projects.edges.map(({ node }) => {
         const { id, featuredImage, title } = node.frontmatter
-        return <Image style={{marginLeft:'10px'}} fixed={featuredImage.childImageSharp.fixed} alt={title} key={id} />
+        if(!featuredImage) return null;
+        return <Image style={{marginLeft:'50px'}} fixed={featuredImage.childImageSharp.fixed} alt={title} key={id} />
       })}
       </ReactMarquee>
     </div>

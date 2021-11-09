@@ -9,6 +9,13 @@ import Img from "gatsby-image"
 const ServicesPage = () => {
   const data = useStaticQuery(graphql`
     query {
+      hana: file(relativePath: { eq: "Hana-web-developer-2.jpg" }) {
+        childImageSharp {
+          fluid(maxWidth: 800) {
+            ...GatsbyImageSharpFluid
+          }
+        }
+      }
       test1: file(relativePath: { eq: "Client-Testimonials-1.png" }) {
         childImageSharp {
           fluid(maxWidth: 700) {
@@ -37,36 +44,60 @@ const ServicesPage = () => {
   return (
     <Layout>
       <SEO title="Services" image={data.site.siteMetadata.image} />
-      <section>
-        <h1 className="hidden">Web Design and Development Services</h1>
-        <p className="h1 indent">Services</p>
-        <p className="large service-intro indent">
-          Investing in a professional website design is crucial for giving a
-          great first impression to your visitors and for making sales.
-        </p>
 
-        <div className="benefits">
-          <h3 className="underline ul-blue">
-            <nobr>Benefits of hiring a professional</nobr>
-          </h3>
-          <ul className="chevron-list">
-            <li>
-              <FontAwesomeIcon icon="chevron-right" /> Save you hours of time &
-              frustration
-            </li>
-            <li>
-              <FontAwesomeIcon icon="chevron-right" /> Strategic design to reach
-              your audience
-            </li>
-            <li>
-              <FontAwesomeIcon icon="chevron-right" /> Coding knowledge that can
-              solve problems
-            </li>
-            <li>
-              <FontAwesomeIcon icon="chevron-right" /> Have things exactly the
-              way you want them
-            </li>
-          </ul>
+      <section className="about">
+        <div className="flex-space-between">
+          <div className="about-hero-flex-1">
+            <Img
+              fluid={data.hana.childImageSharp.fluid}
+              className="portrait"
+              alt="Portrait of Web and Shopify Developer Hana Drdla"
+            />
+          </div>
+          <div className="about-hero-flex-2">
+            <h1 className="heading-small">Services</h1>
+            <p className="h2"style={{ margin: "0" }}>
+              E-commerce stores that stand out from your competitors
+            </p>
+          </div>
+        </div>
+      </section>
+      <div className="horizontal-line"></div>
+      <section>
+        <div className="flex-space-between text-indent">
+          <div className="col-3">
+            <h2>Reasons we should work together</h2>
+          </div>
+          <div className="col-3">
+            <h3 className="underline ul-purple">Quality Work</h3>
+            <p>
+              My knowledge of web design and <nobr>e-commerce</nobr> will show
+              your customers that you're a trusted brand.
+            </p>
+            <br />
+            <br />
+
+            <h3 className="underline ul-blue">Clear Communication</h3>
+            <p>
+              We'll work through a process together to make sure you love your
+              new website and are proud to show if off.
+            </p>
+          </div>
+          <div className="reasons col-3">
+            <h3 className="underline ul-yellow">Coding Knowledge</h3>
+            <p>
+              I create solutions that can't be done without code, making for a
+              more unique experience for your visitors.
+            </p>
+            <br />
+            <br />
+
+            <h3 className="underline ul-purple">Effortless</h3>
+            <p>
+              After initial discussions, trust me to come back with something
+              that makes your dreams come true.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -116,7 +147,7 @@ const ServicesPage = () => {
                     <FontAwesomeIcon icon="chevron-right" /> Newsletter email collection 
                   </li>
                   <li>
-                    <FontAwesomeIcon icon="chevron-right" /> Shopify Maintenace guide 
+                    <FontAwesomeIcon icon="chevron-right" /> Shopify Maintenance guide 
                   </li>
                   <li>
                     <FontAwesomeIcon icon="plus" /> Add-ons available 
@@ -129,7 +160,7 @@ const ServicesPage = () => {
                   to="/contact"
                   className="btn btn-purple"
                 >
-                  Enquire Now
+                  Inquire Now
                 </Link>
             </div>
           </div>
@@ -144,7 +175,7 @@ const ServicesPage = () => {
                 <div>
                 <p>You’re a graphic designer and need someone to bring your design to life. Forget the hassle and let me build so you can deliver a higher quality product to your clients more quickly.<br /><br />
 
-                <strong>Timeline:</strong> 1-3 weeks</p>
+                <strong>Timeline:</strong> 2-3 weeks</p>
                 <div className="price">
                   <p>
                     Starting at <br />
@@ -187,7 +218,7 @@ const ServicesPage = () => {
                 <Link
                   to="/contact"
                   className="btn btn-blue"
-                >Enquire Now
+                >Inquire Now
                 </Link>
             </div>
           </div>
@@ -220,18 +251,18 @@ const ServicesPage = () => {
                   <li>
                     <FontAwesomeIcon icon="chevron-right" /> You want training so you can make updates yourself</li>
                   <li>
-                    <FontAwesomeIcon icon="chevron-right" /> You have questions about how to reach your customers
-
-                  </li>
-                  <li>
                     <FontAwesomeIcon icon="chevron-right" /> You are a designer who needs guidance on Shopify
-                  </li>
-                  <li>
-                    <FontAwesomeIcon icon="chevron-right" /> You need apps installed in your store
                   </li>
                   <li>
                     <FontAwesomeIcon icon="chevron-right" />  You are an agency looking for white-label services
                   </li> 
+                  <li>
+                    <FontAwesomeIcon icon="chevron-right" /> You have questions about how to reach your customers
+                  </li>
+                  <li>
+                    <FontAwesomeIcon icon="chevron-right" /> You need apps installed in your store
+                  </li>
+
                 </ul>
                 </div>
               </div>  
@@ -239,7 +270,7 @@ const ServicesPage = () => {
                 <Link
                   to="/contact"
                   className="btn btn-yellow"
-                >Enquire Now
+                >Inquire Now
                 </Link>
             </div>
           </div>

@@ -62,7 +62,11 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
-        fonts: [`lato:400,700,900`],
+        fonts: [
+          `Lato\:400,700,900`,
+          `La Belle Aurore`,
+          `Allison`, 
+        ],
         display: "swap",
       },
     },

@@ -1,18 +1,37 @@
 import React from "react"
 import { Link, useStaticQuery, graphql } from "gatsby"
-//import Img from "gatsby-image"
+import { styled, keyframes } from '@stitches/react';
+import * as Tooltip from '@radix-ui/react-tooltip';
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import Image from "gatsby-image"
 import Categories from "../components/categories"
 
-const ProjectsPage = () => {
 
+
+const slideDown = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(-10px)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
+});
+
+const slideUp = keyframes({
+  '0%': { opacity: 0, transform: 'translateY(10px)' },
+  '100%': { opacity: 1, transform: 'translateY(0)' },
+});
+
+const TooltipContent = styled(Tooltip.Content, {
+  '&[data-side="top"]': { animationName: slideUp },
+  '&[data-side="bottom"]': { animationName: slideDown },
+  animationDuration: '0.6s',
+  animationTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+});
+
+const ProjectsPage = () => {
   const data = useStaticQuery(graphql`
     query {
       projects: allMdx(
         filter: { fields: { source: { eq: "projects" } } }
-        sort: { order: ASC, fields: frontmatter___date }
+        sort: { order: DESC, fields: frontmatter___date }
       ) {
         edges {
           node {
@@ -53,59 +72,39 @@ const ProjectsPage = () => {
       <SEO title="Projects" image={data.site.siteMetadata.image} />
       <section>
         <h1 className="indent">Recent Projects</h1>
-        <p className="indent">
-          Exercitation ullamco labore id non excepteur qui minim quis aliquip
-          tempor labore aliqua sit. Elit deserunt eu ea Lorem nulla eu aliqua
-          veniam ea magna consequat minim ea. Consequat dolore aute qui
-          adipisicing dolore irure ex magna qui deserunt. Mollit consectetur
-          sunt non ea id. Commodo irure et labore ex veniam fugiat mollit in
-          voluptate veniam cupidatat veniam quis non. Eiusmod tempor officia
-          reprehenderit qui adipisicing ad in ea cillum esse exercitation enim
-          mollit occaecat. Sit cupidatat nostrud cupidatat sit aliquip nostrud
-          consectetur consequat sunt anim laboris tempor irure anim. Commodo
-          aliquip qui do laborum magna. Exercitation nostrud et sit laboris
-          veniam Lorem. Excepteur aliquip dolor excepteur duis mollit ipsum
-          elit. Nostrud do ut veniam ut. Dolor fugiat qui proident id aute
-          adipisicing id et aliquip ex nostrud.
+        <p className="large project-intro indent">
+          Creating impressive and memorable websites that will leave a lasting
+          impression on your customers and make you more sales. I promise you
+          clean and engaging design, thoughtful strategy and good work.
         </p>
-        <div className="flex-space-between project-showcase">
+        <div className="flex-space-between project-showcase text-indent">
           {firstSixProjects.map(({ node }) => {
             const { title, featuredImage, categories, slug } = node.frontmatter
             return (
-              <div className="half-width project-showcase-description center">
+              <div className="project-feature">
                 <Link to={`/project/${slug}`}>
-                  <Image
-                    fluid={featuredImage.childImageSharp.fluid}
-                    alt={title}
-                  />
-                </Link>
-                <p>
-                  <strong>{title}</strong>
-                </p>
-                <p>
-                  <Categories categories={categories}/>
-                </p>
-              </div>
-            )
-          })}
-        </div>
-      </section>
-      <div className="horizontal-line"></div>
-      <section>
-        <h2 className="center pad-bottom">Past Projects</h2>
-        <div className="flex-space-between">
-          {remainingProjects.map(({ node }) => {
-            const { id, title, featuredImage, categories, slug,date } = node.frontmatter
-            return (
-              <div className="past-project" key={id}>
-                <Link to={`/project/${slug}`}>
-                  <Image
-                    fluid={featuredImage.childImageSharp.fluid}
-                    alt={title}
-                  />
-                  <p>{title} / {date}</p>
+                  {featuredImage && (
+                    <Image
+                      fluid={featuredImage.childImageSharp.fluid}
+                      alt={title}
+                      className="project-feature-image"
+                    />
+                  )}
+
+                  <p className="project-grid-title">
+                    <strong>{title}</strong>{" "}
+                    <span
+                      style={{
+                        float: "right",
+                        paddingRight: "20px",
+                        fontSize: "2.5rem",
+                      }}
+                    >
+                      →
+                    </span>
+                  </p>
                   <p>
-                  <Categories categories={categories}/>
+                    <Categories categories={categories} />
                   </p>
                 </Link>
               </div>
@@ -113,8 +112,47 @@ const ProjectsPage = () => {
           })}
         </div>
       </section>
+      <section>
+        <h2 className="full-width-title center">Past Projects</h2>
+        <div className="project-list">
+          {remainingProjects.map(({ node }) => {
+            const {
+              id,
+              title,
+              featuredImage,
+              categories,
+              slug,
+              date,
+            } = node.frontmatter
+            return (
+              <Tooltip.Root delayDuration={100}>
+                <Tooltip.Trigger style={{width:'100%'}}>
+                  <div className="project-list-item" key={id}>
+                    <Link to={`/project/${slug}`}>
+                      <p>{title}</p>
+                      <p>{date}</p>
+                      <p>
+                        <Categories categories={categories} />
+                      </p>
+                    </Link>
+                  </div>
+                </Tooltip.Trigger>
+                <TooltipContent style={{
+                  height: 250,
+                  width: 250
+                }}>
+                  <Image
+                    fluid={featuredImage.childImageSharp.fluid}
+                    alt={title}
+                    className="project-feature-image"
+                  />
+                </TooltipContent>
+              </Tooltip.Root>
+            )
+          })}
+        </div>
+      </section>
 
-      <div className="horizontal-line"></div>
       <section>
         <h2 className="center half-width">Ready to start your project?</h2>
         <div className="center">

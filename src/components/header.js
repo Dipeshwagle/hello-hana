@@ -7,7 +7,6 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { fab } from "@fortawesome/free-brands-svg-icons"
 import { faEnvelope, faChevronRight, faPlus } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { OutboundLink } from "gatsby-plugin-google-analytics"
 
 library.add(fab, faEnvelope, faChevronRight, faPlus)
 
@@ -79,12 +78,7 @@ const Header = () => {
                   <Link to="/about">About</Link>
                 </li>
                 <li>
-                  <OutboundLink href="https://www.lunatemplates.co"
-                    target="_blank"
-                    rel="Hana Drdla"
-                    alt="Luna Templates "
-                    aria-label="Shopify templates and courses"
-                  >Resources</OutboundLink>
+                  <Link to="/resources">Resources</Link>
                 </li>
                 <li>
                   <Link to="/blog">Blog</Link>

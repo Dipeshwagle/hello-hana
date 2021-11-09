@@ -24,34 +24,19 @@ export default function Project({ data, pageContext, location }) {
   return (
     <Layout location={location}>
       <SEO title={title} image={image} />
-      <article>
+      <article className="project-details">
         <h1 className="center">{title}</h1>
-
+        <p className="center">
+            <Categories categories={categories}/>
+        </p>
         <br />
         <div className="center ">
           <MDXRenderer>{description}</MDXRenderer>
         </div>
-        <br />
-        <div className="center">
-          <Img
-            fluid={featuredImage.childImageSharp.fluid}
-            alt={title}
-            className="blog-feature-image-pinterest"
-          />
-        </div>
 
-       <p className="center">
-          <strong>{date}</strong>
-        </p>
-
-        <p className="center">
-          <strong>
-            <Categories categories={categories}/>
-          </strong>
-        </p>
         {liveSite && (
           <p className="center">
-            <a href={liveSite}>Vist Site</a>
+            <a href={liveSite}>Visit Site</a>
           </p>
         )}
         <br />

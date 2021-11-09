@@ -54,7 +54,6 @@ function SEO({
           ? site.siteMetadata.title
           : `${title} | ${site.siteMetadata.title}`
       }
-      // titleTemplate={`%s | ${site.siteMetadata.title}`}
       link={
         canonical
           ? [
